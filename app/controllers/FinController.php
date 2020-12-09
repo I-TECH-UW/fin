@@ -217,6 +217,7 @@ $activitydetailRow->GFA = $this->getSanParam ( 'GFA' );
 $activitydetailRow->BudgetNbr = $this->getSanParam ( 'BudgetNbr' );
 $activitydetailRow->BudgetName = $this->getSanParam ( 'BudgetName' );
 $activitydetailRow->AccountCode = $this->getSanParam ( 'AccountCode' );
+$activitydetailRow->AccountingIndirectCostBase = $this->getSanParam ( 'AccountingIndirectCostBase' );
 $activitydetailRow->PCAProjectCodeOrig = $this->getSanParam ( 'PCAProjectCodeOrig' );
 $activitydetailRow->PCAProjectCodePosting = $this->getSanParam ( 'PCAProjectCodePosting' );
 $activitydetailRow->PCAOptionCodeOrig = $this->getSanParam ( 'PCAOptionCodeOrig' );
@@ -527,6 +528,15 @@ $activitydetailRow->ModifiedBy = $user->first_name . " " . $user->last_name;
 		    $gfaArray [] = $val;
 		}
 		$this->viewAssignEscaped ( 'budgetEnd', $gfaArray );
+
+		//distinct AccountingIndirectCostBase list
+		$gArray = OptionList::suggestionList ( 'activitydetail', 'AccountingIndirectCostBase', false, 999, false, false, true );
+		$gfaArray = array ();
+		foreach ( $gArray as $key => $val ) {
+			//if ($val ['id'] != 0)
+			$gfaArray [] = $val;
+		}
+		$this->viewAssignEscaped ( 'accountingIndirectCostBase', $gfaArray );
 		
 		//distinct PCAProjectCodeOrig list
 		$gArray = OptionList::suggestionList ( 'activitydetail', 'PCAProjectCodeOrig', false, 999, false, false, true );
@@ -748,6 +758,7 @@ $activitydetailRow->ModifiedBy = $user->first_name . " " . $user->last_name;
         $criteria ['BudgetStatus'] = $this->getSanParam ( 'budgetStatusInput' );
         $criteria ['IDCRate'] = $this->getSanParam ( 'idcRateInput' );
         
+	$criteria ['AccountingIndirectCostBase'] = $this->getSanParam ( 'accountingIndirectCostBaseInput' );
         $criteria ['PCAProjectCodeOrig'] = $this->getSanParam ( 'pcaProjectCodeOrigInput' );
         $criteria ['PCAProjectCodePosting'] = $this->getSanParam ( 'pcaProjectCodePostingInput' );
            
@@ -786,6 +797,7 @@ $activitydetailRow->ModifiedBy = $user->first_name . " " . $user->last_name;
         $criteria ['showPCAProjectCodeOrig'] = ($this->getSanParam ( 'showPCAProjectCodeOrig' ));
         $criteria ['showPCAProjectCodePosting'] = ($this->getSanParam ( 'showPCAProjectCodePosting' ));
         
+	$criteria ['showAccountingIndirectCostBase'] = ($this->getSanParam ( 'showAccountingIndirectCostBase' ));
         $criteria ['showPCAOptionCodeOrig'] = ($this->getSanParam ( 'showPCAOptionCodeOrig' ));
         $criteria ['showPCAOptionCodePosting'] = ($this->getSanParam ( 'showPCAOptionCodePosting' ));
         $criteria ['showPCATaskCodeOrig'] = ($this->getSanParam ( 'showPCATaskCodeOrig' ));
@@ -826,6 +838,7 @@ $activitydetailRow->ModifiedBy = $user->first_name . " " . $user->last_name;
         		$criteria ['BudgetStatus'] = $this->getSanParam ( 'budgetStatusInput' );
         		$criteria ['IDCRate'] = $this->getSanParam ( 'idcRateInput' );
         		
+			$criteria ['AccountingIndirectCostBase'] = $this->getSanParam ( 'accountingIndirectCostBaseInput' );
           		$criteria ['PCAProjectCodeOrig'] = $this->getSanParam ( 'pcaProjectCodeOrigInput' );
            		$criteria ['PCAProjectCodePosting'] = $this->getSanParam ( 'pcaProjectCodePostingInput' );
            
@@ -850,8 +863,8 @@ $activitydetailRow->ModifiedBy = $user->first_name . " " . $user->last_name;
         	    $sql = 'SELECT '; 
         	    $bulkSql = 'SELECT '; 
            
-$sql .= ' DISTINCT la.id as "id", la.GFA, la.BudgetNbr , la.Budget_Begin, la.Budget_End, la.BudgetName, la.ProjectCode, la.TranAmount, la.AccountCode, la.PCAProjectCodeOrig, la.PCAProjectCodePosting, la.PCAOptionCodeOrig, la.PCAOptionCodePosting, la.PCATaskCodeOrig, la.PCATaskCodePosting, la.TranFTE, la.Budget_Begin, la.Budget_End, la.TranDate1, la.TranDescMod, la.TranReference1, la.TranReference2, la.TranReference3, la.TranReference4, la.Modified, la.TDPrimaryKey, la.FiscalMonth, la.FiscalYear, la.ItechMonth, la.ItechYear ';
-$bulkSql .= ' DISTINCT concat(\'\'\'\', la.TDPrimaryKey) as TDPrimaryKey, concat(\'\'\'\', la.ItechMonth) as AdjustedMonth, la.ItechYear as AdjustedYear, la.ProjectCode, la.GFA, la.BudgetNbr, la.Budget_Begin, la.Budget_End, la.BudgetName, la.TranAmount, la.AccountCode, la.PCAProjectCodeOrig, la.PCAProjectCodePosting, la.PCAOptionCodeOrig, la.PCAOptionCodePosting, la.PCATaskCodeOrig, la.PCATaskCodePosting, la.TranFTE, la.TranDate1, la.TranDescMod, la.TranReference1, la.TranReference2, la.TranReference3, la.TranReference4, la.Modified, la.FiscalMonth as Month, la.FiscalYear as Year ';
+$sql .= ' DISTINCT la.id as "id", la.GFA, la.BudgetNbr , la.Budget_Begin, la.Budget_End, la.AccountingIndirectCostBase, la.BudgetName, la.ProjectCode, la.TranAmount, la.AccountCode, la.PCAProjectCodeOrig, la.PCAProjectCodePosting, la.PCAOptionCodeOrig, la.PCAOptionCodePosting, la.PCATaskCodeOrig, la.PCATaskCodePosting, la.TranFTE, la.Budget_Begin, la.Budget_End, la.TranDate1, la.TranDescMod, la.TranReference1, la.TranReference2, la.TranReference3, la.TranReference4, la.Modified, la.TDPrimaryKey, la.FiscalMonth, la.FiscalYear, la.ItechMonth, la.ItechYear ';
+$bulkSql .= ' DISTINCT concat(\'\'\'\', la.TDPrimaryKey) as TDPrimaryKey, concat(\'\'\'\', la.ItechMonth) as AdjustedMonth, la.ItechYear as AdjustedYear, la.ProjectCode, la.GFA, la.BudgetNbr, la.Budget_Begin, la.Budget_End, la.AccountingIndirectCostBase, la.BudgetName, la.TranAmount, la.AccountCode, la.PCAProjectCodeOrig, la.PCAProjectCodePosting, la.PCAOptionCodeOrig, la.PCAOptionCodePosting, la.PCATaskCodeOrig, la.PCATaskCodePosting, la.TranFTE, la.TranDate1, la.TranDescMod, la.TranReference1, la.TranReference2, la.TranReference3, la.TranReference4, la.Modified, la.FiscalMonth as Month, la.FiscalYear as Year ';
            		
            		$sql .= ' FROM activitydetail la';
            		$bulkSql .= ' FROM activitydetail la';
@@ -881,6 +894,7 @@ $bulkSql .= ' DISTINCT concat(\'\'\'\', la.TDPrimaryKey) as TDPrimaryKey, concat
            		if($criteria['BudgetBegin']) $where []= ' trim(la.Budget_Begin) = \'' . $criteria ['BudgetBegin'] . '\'';
            		if($criteria['BudgetEnd']) $where []= ' trim(la.Budget_End) = \'' . $criteria ['BudgetEnd'] . '\'';
            		
+			if($criteria['AccountingIndirectCostBase']) $where []= ' trim(la.AccountingIndirectCostBase) = \'' . $criteria ['AccountingIndirectCostBase'] . '\'';
            		if($criteria['PCAProjectCodeOrig']) $where []= ' trim(la.PCAProjectCodeOrig) = \'' . $criteria ['PCAProjectCodeOrig'] . '\'';
            		if($criteria['PCAProjectCodePosting']) $where []= ' trim(la.PCAProjectCodePosting) = \'' . $criteria ['PCAProjectCodePosting'] . '\'';
            		
@@ -1088,6 +1102,7 @@ $bulkSql .= ' DISTINCT concat(\'\'\'\', la.TDPrimaryKey) as TDPrimaryKey, concat
 	                        $tableObj->BudgetName = $values['BudgetName'];
 	                        $tableObj->Budget_Begin = $values['Budget_Begin'];
 	                        $tableObj->Budget_End = $values['Budget_End'];
+				$tableObj->AccountingIndirectCostBase = $values['AccountingIndirectCostBase'];
 	                        $tableObj->Budget_Status = $values['Budget_Status'];
 	                        $tableObj->BudgetNbr = $values['BudgetNbr'];
 	                        $tableObj->Location = $values['Location'];

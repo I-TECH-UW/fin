@@ -8,14 +8,13 @@
 
 class Settings {
 
-	public static $COUNTRY_NAME = 'test';
-	public static $COUNTRY_BASE_URL = 'http://localhost:4567';
-	public static $DB_USERNAME = 'admin';
-	// public static $DB_USERNAME = 'rossumg';
-    public static $DB_PWD = '';
+	public static $COUNTRY_NAME = 'fin';
+	public static $COUNTRY_BASE_URL = 'http://findb.itechstaff.org';
+
+    public static $DB_USERNAME = 'tsadmin';
+    public static $DB_PWD = 'Fin!root1';
     
     public static $DB_SERVER = '127.0.0.1';
-    // public static $DB_SERVER = '68.169.46.104';
 
     public static $DB_DATABASE = 'itechweb_fin';
     

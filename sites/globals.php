@@ -20,7 +20,7 @@ define('space',  " ");
 
 
 class Globals {
-	public static $BASE_PATH = '/vagrant/';
+	public static $BASE_PATH = '/var/www/fin/';
 	public static $WEB_FOLDER = 'html';
 	public static $COUNTRY = 'test';
 
